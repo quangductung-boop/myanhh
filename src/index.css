@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Quicksand:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply font-sans bg-pink-50 dark:bg-indigo-950 text-slate-700 dark:text-slate-200 antialiased overflow-x-hidden transition-colors duration-500;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display text-slate-800;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-white/40 backdrop-blur-md border border-white/60 shadow-[0_8px_32px_0_rgba(255,209,220,0.3)];
+  }
+  .glass-card {
+    @apply bg-white/60 dark:bg-slate-900/40 backdrop-blur-xl border border-white/80 dark:border-white/20 shadow-[0_8px_32px_0_rgba(255,182,193,0.2)] dark:shadow-[0_8px_32px_0_rgba(0,0,0,0.5)] rounded-3xl transition-all duration-300;
+  }
+  .glass-card:hover {
+    @apply shadow-[0_12px_40px_0_rgba(255,182,193,0.4)] dark:shadow-[0_12px_40px_0_rgba(167,139,250,0.4)] -translate-y-2 border-white/100 dark:border-white/40;
+  }
+  .bg-gradient-animated {
+    background: linear-gradient(-45deg, #FFD1DC, #E6E6FA, #FFFDD0, #AEC6CF);
+    background-size: 400% 400%;
+    animation: gradient-bg 15s ease infinite;
+  }
+  .dark .bg-gradient-animated {
+    background: linear-gradient(-45deg, #2e1065, #1e1b4b, #312e81, #1e1b4b);
+    background-size: 400% 400%;
+    animation: gradient-bg 15s ease infinite;
+  }
+  .text-glow {
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 209, 220, 0.6);
+  }
+  .dark .text-glow {
+    text-shadow: 0 0 10px rgba(167, 139, 250, 0.8), 0 0 20px rgba(139, 92, 246, 0.6);
+  }
+}
+
+@keyframes gradient-bg {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #FFFDD0;
+}
+::-webkit-scrollbar-thumb {
+  background: #FFD1DC;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ffb6c1;
+}
+
+/* selection */
+::selection {
+  background: #FFD1DC;
+  color: #c026d3;
+}
