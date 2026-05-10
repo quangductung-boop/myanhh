@@ -4,7 +4,8 @@ import { Moon, Sun, Volume2, VolumeX } from 'lucide-react';
 
 export default function Header() {
   const [isDark, setIsDark] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
+  const [isMuted, setIsMuted] = useState(true); // Default to muted for better experience
+  const [hasStarted, setHasStarted] = useState(false);
 
   useEffect(() => {
     if (isDark) {
@@ -16,10 +17,24 @@ export default function Header() {
 
   useEffect(() => {
     window.isMuted = isMuted;
-  }, [isMuted]);
+    const audio = document.getElementById('bg-music');
+    if (audio) {
+      if (isMuted) {
+        audio.pause();
+      } else if (hasStarted) {
+        audio.play().catch(() => {});
+      }
+    }
+  }, [isMuted, hasStarted]);
 
   const toggleTheme = () => setIsDark(!isDark);
-  const toggleSound = () => setIsMuted(!isMuted);
+  
+  const handleToggleSound = () => {
+    if (!hasStarted) {
+      setHasStarted(true);
+    }
+    setIsMuted(!isMuted);
+  };
 
   return (
     <motion.header 
@@ -35,12 +50,18 @@ export default function Header() {
         
         <div className="flex items-center gap-4">
           <button 
-            onClick={toggleSound}
-            className="p-2 rounded-full hover:bg-pink-100 dark:hover:bg-slate-800 transition-colors text-slate-600 dark:text-slate-300"
+            onClick={handleToggleSound}
+            className={`p-2 rounded-full transition-all duration-300 ${isMuted ? 'bg-slate-100 dark:bg-slate-800 text-slate-400' : 'bg-pink-100 dark:bg-pink-900/50 text-pink-500'}`}
             title={isMuted ? "Bật âm thanh" : "Tắt âm thanh"}
           >
-            {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
+            {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5 animate-pulse" />}
           </button>
+          
+          <audio 
+            id="bg-music" 
+            loop 
+            src="/music.mp3"
+          ></audio>
           
           <button 
             onClick={toggleTheme}
